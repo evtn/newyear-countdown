@@ -141,3 +141,7 @@ body {
 a {
   color: var(--link);
 }
+
+.source-link {
+  margin: 1em;
+}
