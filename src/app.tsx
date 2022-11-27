@@ -46,7 +46,7 @@ export const App: FunctionalComponent = () => {
       >
         Source
       </a>
-      <p>
+      <p className="mainpage-link">
         Don't forget to check out <a href="//evtn.me">my other stuff</a>
       </p>
       {seconds > 360 * 86400 ? (
