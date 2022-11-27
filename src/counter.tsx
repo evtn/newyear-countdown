@@ -18,7 +18,9 @@ export const Counter: FunctionalComponent<CounterProps> = ({
 
     const size = sizes[sizeIndex];
     const amount = Math.floor(seconds / size);
-    const sizeName = `${sizeNames[sizeIndex]}${amount % 10 == 1 ? " " : "s"}`;
+    const sizeName = `${sizeNames[sizeIndex]}${
+        amount % 100 != 11 && amount % 10 == 1 ? " " : "s"
+    }`;
 
     const amountStr = amount + ""; //.replace("0", "");
     const zeroCount = Math.max(0, 3 - amountStr.length);
