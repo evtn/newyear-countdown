@@ -1,4 +1,4 @@
-this is a simple New Year countdown site.
+this is a simple new year countdown site, written in TypeScript with Preact.
 
 you can see a live demo at [newyear.evtn.me](https://newyear.evtn.me/)
 
