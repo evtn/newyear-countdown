@@ -40,7 +40,12 @@ export const App: FunctionalComponent = () => {
       {[10, 11, 0, 1, 2].includes(new Date().getMonth()) ? (
         <Snowflakes />
       ) : null}
-      <a href="https://github.com/evtn/newyear-countdown">Source</a>
+      <a
+        className="source-link"
+        href="https://github.com/evtn/newyear-countdown"
+      >
+        Source
+      </a>
       <p>
         Don't forget to check out <a href="//evtn.me">my other stuff</a>
       </p>
