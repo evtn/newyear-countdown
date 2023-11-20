@@ -1,36 +1,28 @@
 import { FunctionalComponent } from "preact";
 
-export const sizes = [86400, 3600, 60, 1] as const;
-const sizeNames = ["day", "hour", "minute", "second"];
+const sizes = [86400, 3600, 60, 1] as const;
 
 type CounterProps = {
     seconds: number;
-    sizeIndex: number;
 };
 
-export const Counter: FunctionalComponent<CounterProps> = ({
-    seconds,
-    sizeIndex,
-}) => {
-    if (sizeIndex != 0) {
-        seconds = seconds % sizes[sizeIndex - 1];
-    }
+export const Counter: FunctionalComponent<CounterProps> = ({ seconds }) => {
+    const parts = sizes.map((size, i) => {
+        const amount = Math.floor(seconds / size);
+        const maxChars = i ? 2 : 3;
+        const zeroes = "0".repeat(maxChars - amount.toString().length);
+        const colon = i ? ":" : "";
+        const prefix = `${colon}${zeroes}`;
 
-    const size = sizes[sizeIndex];
-    const amount = Math.floor(seconds / size);
-    const sizeName = `${sizeNames[sizeIndex]}${
-        amount % 100 != 11 && amount % 10 == 1 ? " " : "s"
-    }`;
+        seconds = seconds % size;
 
-    const amountStr = amount + ""; //.replace("0", "");
-    const zeroCount = Math.max(0, 3 - amountStr.length);
+        return (
+            <span key={i}>
+                <span className="prefix">{prefix}</span>
+                <span className="amount">{amount}</span>
+            </span>
+        );
+    });
 
-    return (
-        <p className="counter">
-            <span className="amount" data-zeros={" ".repeat(zeroCount)}>
-                {amountStr}
-            </span>{" "}
-            <span className="amount-name">{sizeName}</span>
-        </p>
-    );
+    return <p className="counter">{parts}</p>;
 };

@@ -1,0 +1,11 @@
+:root {
+    --mono-lightgray: #b8b8b8;
+
+    --bright-red: hsl(0deg, 80%, 60%);
+    --bright-blue-overlay: hsla(240deg, 80%, 60%, 0.25);
+    --bright-purple-overlay: hsla(270deg, 80%, 60%, 0.25);
+    --bright-pink-overlay: hsla(330deg, 80%, 60%, 0.25);
+
+    --background: #0d0d1d;
+    --text: #fff;
+}

@@ -1,14 +1,21 @@
 import { FunctionalComponent } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import "./app.css";
-import { Counter, sizes } from "./counter";
+import { Counter } from "./counter";
 import { Snowflakes } from "./snowflakes";
 import { getSeconds, NextYear } from "./year";
 
-export type Scheme = "dark" | "light";
+import "./app.css";
+import "./colors.css";
+
+const winterMonths = new Set([0, 1, 2, 10, 11]);
+
+const isWinter = () => {
+  const month = new Date().getMonth();
+
+  return winterMonths.has(month);
+};
 
 export const App: FunctionalComponent = () => {
-  const [scheme, setScheme] = useState("dark");
   const [seconds, setSeconds] = useState(getSeconds());
 
   useEffect(() => {
@@ -19,49 +26,33 @@ export const App: FunctionalComponent = () => {
     return () => clearInterval(intervalID);
   }, []);
 
-  useEffect(() => {
-    const scheme = window.matchMedia("(prefers-color-scheme: light)");
-
-    if (scheme.matches) {
-      setScheme("light");
-    }
-
-    scheme.addEventListener("change", (e) => {
-      if (e.matches) {
-        setScheme("light");
-      } else {
-        setScheme("dark");
-      }
-    });
-  }, []);
+  const isYearStart = seconds > 360 * 86400;
 
   return (
-    <main className={`scheme-${scheme}`}>
-      {[10, 11, 0, 1, 2].includes(new Date().getMonth()) ? (
-        <Snowflakes />
-      ) : null}
+    <main>
+      {isWinter() ? <Snowflakes /> : undefined}
+
       <a
         className="source-link"
         href="https://github.com/evtn/newyear-countdown"
       >
         Source
       </a>
-      <p className="mainpage-link">
-        Don't forget to check out <a href="//evtn.me">my other stuff</a>
-      </p>
-      {seconds > 360 * 86400 ? (
+
+      <a href="//evtn.me">My stuff</a>
+
+      {isYearStart ? (
         <h2>
-          Well, let's wait for <NextYear offset={1} /> now
+          Hooray! Now let's wait for <NextYear />
         </h2>
-      ) : null}
+      ) : undefined}
+
+      <Counter seconds={seconds} />
+
       <h1>
-        <NextYear /> <span>ends in</span>
+        <span className="prefix">left until </span>
+        <NextYear />
       </h1>
-      <div className="counter-container">
-        {sizes.map((e, i) =>
-          e < seconds ? <Counter seconds={seconds} sizeIndex={i} /> : null
-        )}
-      </div>
     </main>
   );
 };

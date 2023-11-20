@@ -1,72 +1,59 @@
 main {
-  background-color: var(--back);
+  --font-multiplier: 1;
   color: var(--text);
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Azeret Mono", sans-serif;
   flex-direction: column;
   --snowflake: "❅";
+  text-align: center;
+
+  background: radial-gradient(circle at 80% 20%, #fff 0 3em, transparent 3.5em),
+    linear-gradient(
+      0deg,
+      var(--bright-red) -10%,
+      var(--bright-pink-overlay) 5%,
+      var(--bright-purple-overlay) 20%,
+      var(--bright-blue-overlay) 30%,
+      var(--background) 90%
+    );
+  background-repeat: no-repeat;
+  background-position: center bottom;
 }
 
 main > * {
   position: relative;
 }
 
-#app {
-  width: 100%;
-  height: 100%;
-}
-
 h1 {
-  font-size: calc(var(--normalized-font) * 4);
-  text-align: center;
+  margin: 0.1em;
+  --font-multiplier: 3.5;
 }
 
 h2 {
-  text-align: center;
-  margin: 0;
+  margin: 0.2em;
+  --font-multiplier: 3;
 }
 
 .counter {
-  font-size: calc(var(--normalized-font) * 3);
+  margin: 0.5em 0;
+  --font-multiplier: 2.5;
 }
 
-.counter-container {
-  width: max-content;
+@media (max-width: 25em) {
+  h1 {
+    --font-multiplier: 3;
+  }
+  h2 {
+    --font-multiplier: 2.5;
+  }
+  .counter {
+    --font-multiplier: 2;
+  }
 }
 
-p {
-  margin: 0;
-  display: block;
-  width: max-content;
-}
-
-span {
-  display: inline-block;
-  height: max-content;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.amount {
-  color: var(--accent);
-}
-
-.amount:before {
-  content: attr(data-zeros);
+.prefix {
   opacity: 0.5;
-}
-
-.year {
-  color: var(--accent);
 }
 
 .snowflakes {
@@ -76,7 +63,8 @@ body {
   left: 0;
   right: 0;
   z-index: 0;
-  font-size: calc(var(--normalized-font) * 1.5);
+  --font-multiplier: 1.5;
+  color: var(--mono-lightgray);
 }
 
 @keyframes snowflakes-fall {
@@ -114,20 +102,20 @@ body {
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite;
   animation-play-state: running;
-  opacity: 0.4;
+  opacity: 1;
 }
 
-.flake:before,
-.flake:after {
+.flake::before,
+.flake::after {
   content: var(--snowflake);
   position: absolute;
 }
 
-.flake:before {
+.flake::before {
   top: 50%;
 }
 
-.flake:after {
+.flake::after {
   animation-name: snowflakes-shake-after;
   animation-duration: 4s;
   animation-timing-function: ease-in-out;
@@ -139,17 +127,23 @@ body {
 }
 
 a {
-  color: var(--link);
+  color: var(--text);
+  font-weight: 700;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+  padding: 0.3em;
+  border-radius: 0.2em;
 }
 
-.source-link {
-  margin: 1em;
+::selection {
+  background: var(--text);
+  color: var(--background);
 }
 
-.mainpage-link {
-  word-break: break-word;
-  max-width: 100vw;
-  text-align: center;
-  padding: 1em;
-  box-sizing: border-box;
+h1 .prefix {
+  font-size: 0.4em;
+}
+
+* {
+  font-size: calc(var(--normalized-font) * var(--font-multiplier));
 }

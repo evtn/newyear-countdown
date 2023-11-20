@@ -2,15 +2,15 @@ import { FunctionalComponent } from "preact";
 
 export const getNextYear = () => new Date().getFullYear() + 1;
 
-export const NextYear: FunctionalComponent<{ offset?: number }> = ({
-  offset,
-}) => {
-  const currentYear = getNextYear() - 1;
-  return <span className="year">{currentYear + (offset || 0)}</span>;
-};
+type NextYearProps = { offset?: number };
+
+export const NextYear: FunctionalComponent<NextYearProps> = ({
+  offset = 0,
+}) => <span className="year">{getNextYear() + offset}</span>;
 
 export const getSeconds = () => {
-  const nextYear = getNextYear();
-  const newYear = new Date(nextYear, 0, 1).valueOf();
-  return (newYear - Date.now()) / 1000;
+  const now = Date.now();
+  const newYear = new Date(getNextYear(), 0, 1).valueOf();
+
+  return (newYear - now) / 1000;
 };
